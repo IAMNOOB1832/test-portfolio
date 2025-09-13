@@ -1,31 +1,73 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Portfolio</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-        h1, h2 { color: #333; }
-        .project { margin-bottom: 20px; }
-        .project img { max-width: 100%; height: auto; }
-    </style>
+    <title>CryptoMania - CoinCap API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Mijn Portfolio</h1>
-    <p>Hoi! Ik ben [Jouw Naam], derdejaars Software Developer. Hieronder vind je een overzicht van mijn projecten.</p>
-
-    <div class="project">
-        <h2>VR BHV-cursus (Unity)</h2>
-        <p>Stageproject bij Saasen Groep. Ontwikkeld in Unity, VR-toepassing voor BHV-training.</p>
-        <a href="link-naar-github-of-webgl-build">Bekijk project</a>
+    <div class="container mt-5">
+        <h2>Crypto Prices</h2>
+        <table class="table table-striped" id="crypto-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Rank</th>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Price (USD)</th>
+                    <th>Market Cap (USD)</th>
+                    <th>24h Change (%)</th>
+                    <th>Explorer</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
-    <div class="project">
-        <h2>Schoolproject Webapp</h2>
-        <p>Webapplicatie ontwikkeld tijdens opleiding, inclusief login-systeem en database.</p>
-        <a href="link-naar-github-project">Bekijk project</a>
-    </div>
+    <!-- Mustache template -->
+    <script id="js-crypto-template" type="text/template">
+        {{#data}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{rank}}</td>
+            <td>{{symbol}}</td>
+            <td>{{name}}</td>
+            <td>{{priceUsd}}</td>
+            <td>{{marketCapUsd}}</td>
+            <td>{{changePercent24Hr}}</td>
+            <td><a href="{{explorer}}" target="_blank">Link</a></td>
+			<td><button class="btn btn-sm btn-primary crypto-info-btn" data-id="{{id}}">More info</button></td>
+        </tr>
+        {{/data}}
+    </script>
+    
+	<!-- Bootstrap Modal -->
+	<div class="modal fade" id="cryptoModal" tabindex="-1" aria-labelledby="cryptoModalLabel" aria-hidden="true">
+  	<div class="modal-dialog modal-dialog-centered">
+    	<div class="modal-content">
+      	<div class="modal-header">
+        	<h5 class="modal-title" id="cryptoModalLabel">Crypto Info</h5>
+        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
+      	<div class="modal-body">
+			<!-- Hier vullen we dynamisch Market Cap en 24h Change -->
+			<p><strong>Market Cap (USD):</strong> <span id="modal-marketcap"></span></p>
+			<p><strong>24h Change (%):</strong> <span id="modal-change"></span></p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+	</div>
 
+    <!-- JS libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.1.0/mustache.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js//main.js"></script>
 </body>
 </html>
